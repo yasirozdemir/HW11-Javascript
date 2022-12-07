@@ -25,15 +25,37 @@ The user should be able to see the list of tasks, add new ones, delete existing 
        Style every button of the page to be bigger
     */
 
+    body {
+      background-color: beige;
+    }
+  
     #myTaskList {
-      background-color: lightgreen;
+      background-color: rgb(254, 185, 75);
       border: solid 1px black;
       font-size: 24px;
     }
 
-    input[type=button] {
+    input[type=button], input[type=text] {
       height: 30px;
       width: 170px;
+    }
+
+    input[type=text] {
+      padding: 0;
+    }
+
+    ul {
+      width: 250px;
+      text-align: center;
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      margin: 5px;
+      padding: 5px;
+      border: solid 1px rgb(83, 82, 82);
+      border-radius: 5px;
     }
 
     </style>
@@ -138,12 +160,14 @@ The user should be able to see the list of tasks, add new ones, delete existing 
         function changeTaskBackgroundColor () {
           let listItems = document.getElementsByTagName('li');
           let colorPicker = document.getElementById('colorPicker');
-          colorPicker.addEventListener("change", function(){
-            for (let i = 0; i < listItems.length; i++) {
-              listItems[i].style.backgroundColor = colorPicker.value;        
-            }
-          })
-        }
+            colorPicker.addEventListener("change", function(event) {
+              for (let i = 0; i < listItems.length; i++) {
+                listItems[i].style.backgroundColor = colorPicker.value;        
+              }
+            })
+          }
+          
+          window.onload = changeTaskBackgroundColor;
 
       /* EXTRA */
 
@@ -156,6 +180,32 @@ The user should be able to see the list of tasks, add new ones, delete existing 
                - Break the code into many function for simplicity 
                - Reuse the functions previously created
             */
+
+        function bubbleSort() {
+
+          let tasks = getTasksAsArray();
+
+          // for loop for bubble sorting
+          for (let i = 0; i < tasks.length; i++) { 
+              for (let j = 0; j < tasks.length; j++) {
+                  if (tasks[j] > tasks[j + 1]) {
+                      let tmp = tasks[j];
+                      tasks[j] = tasks[j + 1];
+                      tasks[j + 1] = tmp;
+                  }
+              }
+          }
+          
+          let alphabeticallyOrdered = tasks;
+
+          ulNode.innerHTML = ''; // clearing the unordered list to make it ready for the program to add the children alphabetically in order
+
+          for (let i = 0; i < alphabeticallyOrdered.length; i++) { //for loop to create new list items, appending them and give them the tasks alphabetically in order
+            let newListItem = document.createElement('li');
+            ulNode.appendChild(newListItem);
+            newListItem.innerText = alphabeticallyOrdered[i];
+          }
+        }
 
     </script>
   </body>
